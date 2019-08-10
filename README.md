@@ -1,1 +1,1 @@
-"# maydon_bot" 
+Maydon bot - foydalanuvchiga yaqin atrofda joylashgan fudbol maydonlarini topishga va ularni oldindan band qilish ga yordam beruvchi bot
