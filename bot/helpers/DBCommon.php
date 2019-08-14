@@ -1,47 +1,42 @@
 <?php 
-
-require(dirname(__FILE__)."/PDO/src/PDO.class.php");
-
-
-// $DB->query("DROP TABLE IF EXISTS `fruit`;");
-// $DB->query("CREATE TABLE IF NOT EXISTS `fruit` (
-
-// $AffectedRows = $DB->query("INSERT INTO `fruit` (`id`, `name`, `color`) VALUES
-
-// var_export($DB->query("SELECT * FROM fruit WHERE name=:name and color=:color",array('name'=>'apple','color'=>'red')));
-// var_export($DB->query("SELECT * FROM fruit WHERE name IN (?)",array('apple','banana')));
-// var_export($DB->column("SELECT color FROM fruit WHERE name IN (?)",array('apple','banana','watermelon')));
-// var_export($DB->row("SELECT * FROM fruit WHERE name=? and color=?",array('apple','red')));
-
-// echo $DB->single("SELECT color FROM fruit WHERE name=? ",array('watermelon'));
-
-// $DB->query("DELETE FROM fruit WHERE id = :id", array("id"=>"1"));
-// $DB->query("DELETE FROM fruit WHERE id = ?", array("1")); // Update
-// $DB->query("UPDATE fruit SET color = :color WHERE name = :name", array("name"=>"strawberry","color"=>"yellow"));
-// $DB->query("UPDATE fruit SET color = ? WHERE name = ?", array("yellow","strawberry"));
-// $DB->query("INSERT INTO fruit(id,name,color) VALUES(?,?,?)",array(null,"mango","yellow"));//Parameters must be ordered
-// $DB->query("INSERT INTO fruit(id,name,color) VALUES(:id,:name,:color)", array("color"=>"yellow","name"=>"mango","id"=>
-
-// echo $DB->lastInsertId();
-// echo $DB->querycount;
+require_once(dirname(__FILE__).'/lib/MySqlDb.php');
 
 class DBCommon
 {
-	provate $DB;
-	provate $DBHost = '127.0.0.1';
-	provate $DBPort =  3306;
-	provate $DBName = 'test';
-	provate $DBUser = 'root';
-	provate $DBPassword =  'root';
+	private $DB;
+	private $DBHost = '127.0.0.1';
+	private $DBPort =  3306;
+	private $DBName = 'test';
+	private $DBUser = 'root';
+	private $DBPassword =  'root';
+	private $telegram;
 
-	function __construct(argument)
+	function __construct($telegram)
 	{
-		$DB = new Db($this->DBHost, $this->DBPort, $this->DBName, $this->DBUser, $this->DBPassword);		
+		$this->telegram = $telegram;
+		$this->DB = new MySqlDb($this->DBHost, $this->DBUser, $this->DBPassword, $this->DBName); 
 	}
 
-	public function FunctionName($value='')
+	public function insertUser()
 	{
-		# code...
+		$message = $this->telegram->getWebhookUpdates()->getCallbackQuery()->getMessage();		
+		$text = $message->getText();
+		$user = $message->getFrom();
+		$chat = $message->getChat();
+		$location = $message->getLocation();
+		$contact = $message->getContact();
+		
+	}
+
+	public function insertArray($table, $insertData)
+	{
+		return $this->Db->insert($table, $insertData);
+	}
+
+	public function updateArray($table, $where, $updateData)
+	{
+		$Db->where(key($where),value($where));
+		return $this->Db->update($table, $updateData);
 	}
 }
 
