@@ -10,7 +10,7 @@ class BQueryCommon
 
     const DB_HOST = "127.0.0.1";
     const DB_PORT = "3306";
-    const DB_NAME = "mayon_bot";
+    const DB_NAME = "maydon_bot";
     const DB_USERNAME = "root";
     const DB_USERPASS = "root";
 
@@ -27,6 +27,40 @@ class BQueryCommon
         // mysqli_set_charset($this->dbcon, "utf8");
 
         // BCommon::errorLog($this->telegram, "connected...");
+    }
+
+    // #1
+    public function getUser($chat_id)
+    {
+        $sql = "SELECT * FROM `bot_users` WHERE `chat_id` = $chat_id";
+
+        $result = mysqli_query($this->dbcon, $sql);
+        $rows = mysqli_fetch_object($result);
+
+        return $rows;
+    }
+
+    // #2, #4
+    public function updateOrInsertUser($user, $lang = "ru")
+    {
+
+        $firstname = $this->clearCharater($user->getFirstName());
+        $lastname = $this->clearCharater($user->getLastName());
+        $username = $user->getUsername();
+
+        $sql = "INSERT INTO `bot_users`(`chat_id`, `first_name`, `last_name`, `username`) VALUES ({$user->getId()}, '{$firstname}', '{$lastname}', '{$username}') ON DUPLICATE KEY UPDATE `language_code` = '{$lang}'";
+
+        if (!mysqli_query($this->dbcon, $sql))
+            BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
+    }
+
+    // #3     
+    public function updatePageStatus($chat_id, $status)
+    {
+        $sql = "UPDATE `bot_users` SET `page_status` = $status WHERE `chat_id` = $chat_id";
+
+        if (!mysqli_query($this->dbcon, $sql))
+            BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
     }
 
     public function updateOrderPayment($id, $data)
@@ -51,19 +85,6 @@ class BQueryCommon
     {
 
         $sql = "INSERT INTO `bot_payments`(`user`, `phone`, `created_at`, `updated_at`, `total_amount`, `invoice_payload`, `telegram_payment_charge_id`, `provider_payment_charge_id`, `raw_data`, `status`, `order_identity`, `order_code`, `provider`, `invoice_message_id`) VALUES ('" . $data['user'] . "', '" . $data['phone'] . "', '" . time() . "','" . time() . "','" . $data['total_amount'] . "','" . $data['invoice_payload'] . "','','','','0','" . $data['order_identity'] . "','" . $data['order_code'] . "','" . $data['provider'] . "', '" . $data['message_id'] . "')";
-
-        if (!mysqli_query($this->dbcon, $sql))
-            BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
-    }
-
-    public function updateOrInsertUser($user, $lang = "ru")
-    {
-
-        $firstname = $this->clearCharater($user->getFirstName());
-        $lastname = $this->clearCharater($user->getLastName());
-        $username = $user->getUsername();
-
-        $sql = "INSERT INTO `bot_users`(`chat_id`, `first_name`, `last_name`, `username`) VALUES ({$user->getId()}, '{$firstname}', '{$lastname}', '{$username}') ON DUPLICATE KEY UPDATE `language_code` = '{$lang}'";
 
         if (!mysqli_query($this->dbcon, $sql))
             BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
@@ -166,14 +187,6 @@ class BQueryCommon
             BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
     }
 
-    public function updatePageStatus($chat_id, $status)
-    {
-        $sql = "UPDATE `bot_users` SET `page_status` = $status WHERE `chat_id` = $chat_id";
-
-        if (!mysqli_query($this->dbcon, $sql))
-            BCommon::errorLog($this->telegram, mysqli_error($this->dbcon));
-    }
-
     public function updateOrderInfo($chat_id, $payment_id = 18, $delivery_id = 16)
     {
         $sql = "UPDATE `bot_users` SET `payment_id` = $payment_id, `delivery_id` = $delivery_id WHERE `chat_id` = $chat_id";
@@ -271,17 +284,6 @@ class BQueryCommon
         $rows = mysqli_fetch_object($result);
 
         return intval($rows->last_message_id);
-    }
-
-    // 1
-    public function getUser($chat_id)
-    {
-        $sql = "SELECT * FROM `bot_users` WHERE `chat_id` = $chat_id";
-
-        $result = mysqli_query($this->dbcon, $sql);
-        $rows = mysqli_fetch_object($result);
-
-        return $rows;
     }
 
     public function getCategories($restaurantId, $lang)
