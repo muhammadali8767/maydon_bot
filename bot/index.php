@@ -1,6 +1,7 @@
 <?php
 
-define ( "BOT_TOKEN", '786772794:AAEptdTryiDDYgXRsyF-Sbfy0JH_JkLqhU4' );
+// define ( "BOT_TOKEN", '786772794:AAEptdTryiDDYgXRsyF-Sbfy0JH_JkLqhU4' );
+define ( "BOT_TOKEN", '975816512:AAEtda3oR5IRl7vX6pOc8sRCEqtYcGni3h0' );
 
 // Custom Helpers
 require_once '../vendor/autoload.php';

@@ -1,5 +1,6 @@
 <?php
-    $bot_token = '786772794:AAEptdTryiDDYgXRsyF-Sbfy0JH_JkLqhU4';
+    // $bot_token = '786772794:AAEptdTryiDDYgXRsyF-Sbfy0JH_JkLqhU4';
+    $bot_token = '975816512:AAEtda3oR5IRl7vX6pOc8sRCEqtYcGni3h0';
     if (isset($_POST['bot_url'])) {
         $result = json_decode(setwebhook($bot_token, $_POST['bot_url']), 1);
     } elseif (isset($_POST['get_info'])) {
@@ -8,7 +9,11 @@
 
     function setwebhook($bot_token, $bot_url)
     {
-        $url = "https://api.telegram.org/bot$bot_token/setwebhook?url=$bot_url/bot/index2.php";
+        if ($bot_url == '')
+            $url = "https://api.telegram.org/bot$bot_token/setwebhook";
+        else
+            $url = "https://api.telegram.org/bot$bot_token/setwebhook?url=$bot_url/bot/index2.php";
+
         return send_curl($url);
     }
 
