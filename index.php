@@ -7,6 +7,37 @@
         $result = json_decode(getwebhookinfo($bot_token), 1);
     }
 
+    define ( "BOT_TOKEN", '975816512:AAEtda3oR5IRl7vX6pOc8sRCEqtYcGni3h0' ); // MAYDON_UZ_BOT
+    define ( "FULLPATH", '' );
+    define ( "BRINGO_URL", '' );
+
+
+    // Custom Helpers
+    require_once FULLPATH . 'vendor/autoload.php';
+    require_once FULLPATH . 'bot/helpers/bcurl.php';
+    require_once FULLPATH . 'bot/helpers/bcommon.php';
+    require_once FULLPATH . 'bot/helpers/bkeyboard.php';
+    require_once FULLPATH . 'bot/helpers/bquerycommon2.php';
+
+    // Telegram Helpers
+    use Telegram\Bot\Api;
+    use Telegram\Bot\Objects\Message;
+    use Telegram\Bot\Objects\Chat;
+    use Telegram\Bot\Objects\User;
+    use Telegram\Bot\Keyboard\Keyboard;
+
+
+    $telegram = new Api(BOT_TOKEN);
+    $updates = $telegram->getWebhookUpdates();
+
+
+    $dbhelper = new BQueryCommon($telegram);
+    $emoji = BCommon::getEmoji();
+    $languages = BCommon::getLanguages();
+
+
+    $stadiums = $dbhelper->getListOffStadiums();
+
     function setwebhook($bot_token, $bot_url)
     {
         if ($bot_url == '')
@@ -61,6 +92,7 @@
 
 <?php
     echo "<pre>";
-    print_r($result);
+    // print_r($result);
+    print_r($stadiums);
     echo "</pre>";
 ?>

@@ -52,6 +52,16 @@ if (!is_null($callback)) {
 
     $data = json_decode($data);
 
+    if (isset($data->p)) {
+        if ($data->p == "stadiums") {
+            if (isset($data->page)) {
+                # code...
+            }
+        } elseif ($data->p == "plases") {
+        }
+    }
+
+
     $params = BKeyboard::alert($callback, "Callback query!");
 
     try {

@@ -1,17 +1,17 @@
-40.903081, 71.566454 - Tepaqo'rg'on stadioni  
+Tepaqo'rg'on stadioni  		- 40.903081, 71.566454
 
-40.926595, 71.599734 - Toshbuloq stadioni
+Toshbuloq stadioni  		- 40.926595, 71.599734
 
-40.964171, 71.648252 - Namangan kalsevoy stadioni
+Namangan kalsevoy stadioni  - 40.964171, 71.648252
 
-40.999574, 71.593870 - Navbahor stadioni
+Navbahor stadioni  			- 40.999574, 71.593870
 
-41.001483, 71.593304 - Navbahor ikkinchi stadioni
+Navbahor ikkinchi stadioni  - 41.001483, 71.593304
 
-41.007651, 71.597400 - Yoshkuch stadioni
+Yoshkuch stadioni  			- 41.007651, 71.597400
 
-41.008848, 71.620981 - Paxlavon stadioni
+Paxlavon stadioni  			- 41.008848, 71.620981
 
-41.006478, 71.590870 - Fitnes sentr stadioni
+Fitnes sentr stadioni  		- 41.006478, 71.590870
 
-41.001466, 71.606655 - Mini fudbol stadioni 3
+Mini fudbol stadioni 3  	- 41.001466, 71.606655
